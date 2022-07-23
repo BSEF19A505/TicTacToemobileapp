@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
     // 0-----X
     // 1-----O
     // 2-----Null
-
+    boolean st=true;
     int activestate=0;
     int gamestate[]={2,2,2,2,2,2,2,2,2};
     int[][] winstate={{0,1,2},{3,4,5},{6,7,8},
@@ -20,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
     public void onTap(View view){
         ImageView img = (ImageView) view;
         int tap = Integer.parseInt(img.getTag().toString());
+        if(!st){
+            reset(view);
+        }
         if(gamestate[tap]==2){
             gamestate[tap]=activestate;
             img.setTranslationY(-1000.0f);
@@ -44,10 +47,13 @@ public class MainActivity extends AppCompatActivity {
                gamestate[winPosition[1]]==gamestate[winPosition[2]] &&
                gamestate[winPosition[0]]!=2){
                 String winner;
+                st = false;
+
                 if(gamestate[winPosition[0]]==0) {
                     winner="X has won";
                     TextView status = findViewById(R.id.status);
                     status.setText(winner);
+
 
                 }else{
                     winner="O has won";
@@ -60,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void reset(View view){
+        st=true;
         for(int i=0;i<gamestate.length; i++ ){
             gamestate[i]=2;
         }
